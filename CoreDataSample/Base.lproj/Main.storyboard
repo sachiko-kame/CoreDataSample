@@ -21,7 +21,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="1Zf-xv-61z">
                                 <rect key="frame" x="10" y="30" width="355" height="637"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="agt-43-5lv">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="title" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="agt-43-5lv">
                                         <rect key="frame" x="0.0" y="0.0" width="355" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="fpk-92-7sg"/>
@@ -30,7 +30,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="discription" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DSZ-Ho-Uf1">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="discription" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="DSZ-Ho-Uf1">
                                         <rect key="frame" x="0.0" y="51" width="355" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="xAB-bT-JiN"/>
@@ -53,7 +53,7 @@
                                             <action selector="tap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UH2-WF-rOu"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="検索したいTitleを入力してくだい。" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5L8-1u-9bh">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="検索したいTitleを入力してくだい。" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="5L8-1u-9bh">
                                         <rect key="frame" x="0.0" y="153" width="355" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="fhd-OG-WOY"/>
