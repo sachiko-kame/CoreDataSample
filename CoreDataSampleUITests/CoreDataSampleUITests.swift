@@ -33,4 +33,59 @@ class CoreDataSampleUITests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
+    func testSample(){
+        
+        let TestEntitys:[TestEntity] = [
+            TestEntity(title:"あ", discription:"あり"),
+            TestEntity(title:"か", discription:"かき"),
+            TestEntity(title:"わ", discription:"わたがし"),
+            TestEntity(title:"た", discription:"大変だ！")
+        ]
+    
+        
+        let app = XCUIApplication()
+        let newbutton = app.buttons["新規アイテムの追加"]
+        let resultbutton = app.buttons["検索結果の表示"]
+        let sortresultbutton = app.buttons["sortして全てを表示"]
+        let allbutton = app.buttons["全表示"]
+        
+        for item in TestEntitys {
+            app.textFields["title"].tap()
+            if(app.textFields["title"].value as! String != "" && app.textFields["title"].value as! String != "title"){
+                app.textFields["title"].buttons["Clear text"].tap()
+            }
+            app.textFields["title"].typeText(item.title)
+            
+            
+            app.textFields["discription"].tap()
+            if(app.textFields["discription"].value as! String != "" && app.textFields["discription"].value as! String != "discription"){
+                app.textFields["discription"].buttons["Clear text"].tap()
+            }
+            app.textFields["discription"].typeText(item.discription)
+        
+            newbutton.tap()
+            app.buttons["Return"].tap()
+            app.swipeUp()
+        }
+        
+    
+        app.textFields["検索したいTitleを入力してくだい。"].tap()
+        app.textFields["検索したいTitleを入力してくだい。"].typeText("か")
+        app.buttons["Return"].tap()
+        app.swipeUp()
+        
+        resultbutton.tap()
+        app.swipeUp()
+        
+        sortresultbutton.tap()
+        allbutton.tap()
+        app.swipeUp()
+        
+
+    }
+}
+
+struct TestEntity {
+    var title:String
+    var discription:String
 }
