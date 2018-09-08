@@ -59,7 +59,7 @@ class CoreDaraManager<T:NSManagedObject>: NSObject {
          someDataBプロパティが100のレコードを指定している
          let predicate = NSPredicate(format: "%K = %d", "someDataB", 100)
          */
-        self.fetchRequest.predicate = NSPredicate(format: "\(key) == %@", serch as! CVarArg )
+//        self.fetchRequest.predicate = NSPredicate(format: "\(key) == %@", serch as! CVarArg )
         
         /*
         複数
@@ -116,6 +116,11 @@ class CoreDaraManager<T:NSManagedObject>: NSObject {
             latestmessage = "\(nserror.localizedDescription)"
             Do()
         }
+    }
+    
+    func fetchReset(){
+        fetchRequest.predicate = nil
+        fetchRequest.sortDescriptors = nil
     }
     
     func save(Do:(()->())){

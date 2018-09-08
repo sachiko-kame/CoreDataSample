@@ -59,8 +59,7 @@ class ViewModel: NSObject {
     }
     
     func fetchReset(){
-        let fetchRequest:NSFetchRequest<Entity> = Entity.fetchRequest()
-        coreDaraManager.fetchRequest = fetchRequest
+        coreDaraManager.fetchReset()
     }
     
     func itemAdd(title:String, discription:String){
@@ -123,5 +122,14 @@ extension ViewModel:UITableViewDelegate, UITableViewDataSource{
         cell.textLabel!.text = Text
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete{
+            itemdelete(num:indexPath.row)
+        }
+        
+        center.post(Notification(name:Notification.Name(rawValue: myNotification)))
     }
 }
