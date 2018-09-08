@@ -28,17 +28,13 @@ class CoreDaraManager<T:NSManagedObject>: NSObject {
     let viewContext:NSManagedObjectContext
     var fetchRequest:NSFetchRequest<T>
     var fetchRequests:[T] = []
-    var entityDescription:NSEntityDescription?
-    var ManagedObject:T
     var latestmessage:String = ""
 
     init(fetchRequest:NSFetchRequest<T>){
        
        viewContext = appDelegate.persistentContainer.viewContext
        self.fetchRequest = fetchRequest
-       
-        self.entityDescription = NSEntityDescription.entity(forEntityName: T.description(), in: viewContext)
-        self.ManagedObject = NSManagedObject(entity: self.entityDescription!, insertInto: viewContext) as! T
+    
     }
     
     func isitem(num:Int) ->Bool {
@@ -59,7 +55,7 @@ class CoreDaraManager<T:NSManagedObject>: NSObject {
          someDataBプロパティが100のレコードを指定している
          let predicate = NSPredicate(format: "%K = %d", "someDataB", 100)
          */
-//        self.fetchRequest.predicate = NSPredicate(format: "\(key) == %@", serch as! CVarArg )
+        self.fetchRequest.predicate = NSPredicate(format: "\(key) == %@", serch as! CVarArg )
         
         /*
         複数

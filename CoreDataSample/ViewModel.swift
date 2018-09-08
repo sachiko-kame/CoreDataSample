@@ -43,8 +43,10 @@ class ViewModel: NSObject {
         center.post(Notification(name:Notification.Name(rawValue: StartNotification)))
         fetchReset()
         //昇順のみ
-        coreDaraManager.sortAllget(sortkey:"title", Do:{
-            center.post(Notification(name:Notification.Name(rawValue: myNotification)))
+        coreDaraManager.save(Do:{
+            coreDaraManager.sortAllget(sortkey:"title", Do:{
+                center.post(Notification(name:Notification.Name(rawValue: myNotification)))
+            })
         })
     }
     
@@ -90,8 +92,10 @@ class ViewModel: NSObject {
     
     func itemSerch(serchWord:String){
         center.post(Notification(name:Notification.Name(rawValue: StartNotification)))
-        coreDaraManager.serchfetchResults(serch:serchWord, getCount: nil, Do: {
-            center.post(Notification(name:Notification.Name(rawValue: myNotification)))
+        coreDaraManager.save(Do:{
+            coreDaraManager.serchfetchResults(serch:serchWord, getCount: nil, Do: {
+                center.post(Notification(name:Notification.Name(rawValue: myNotification)))
+            })
         })
     }
     
