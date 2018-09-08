@@ -39,6 +39,9 @@ class ViewController: UIViewController {
             print("☎️処理中")
         }
         
+        titleTextField.delegate = self
+        discriptionTextField.delegate = self
+        SerchWordTextField.delegate = self
         
         viewModel.itemallGet()
     }
@@ -60,5 +63,14 @@ class ViewController: UIViewController {
     @IBAction func sortAllGetTap(_ sender: Any) {
         viewModel.sortallTap()
     }
+}
+
+extension ViewController:UITextFieldDelegate{
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        textField.endEditing(true)
+        return true
+    }
+    
 }
 
