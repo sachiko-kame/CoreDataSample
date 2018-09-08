@@ -75,10 +75,26 @@ class CoreDaraManager<T:NSManagedObject>: NSObject {
         
         /*
          sort いつか使う時のために
-         let a = NSSortDescriptor(key: "title", ascending:true)
-         self.fetchRequest.sortDescriptors = [a]
+         let sortSample = NSSortDescriptor(key: "title", ascending:true)
+         self.fetchRequest.sortDescriptors = [sortSample]
+         
          */
         
+
+        do {
+            self.fetchRequests = try viewContext.fetch(self.fetchRequest)
+            latestmessage = "成功"
+            Do()
+        } catch {
+            let nserror = error as NSError
+            latestmessage = "\(nserror.localizedDescription)"
+            Do()
+        }
+    }
+    
+    func sortAllget(sortkey:String = "title", Do:(()->())){
+        let sortSample = NSSortDescriptor(key: sortkey, ascending:true)
+        self.fetchRequest.sortDescriptors = [sortSample]
         do {
             self.fetchRequests = try viewContext.fetch(self.fetchRequest)
             latestmessage = "成功"

@@ -57,5 +57,8 @@ class ViewController: UIViewController {
         viewModel.itemallGet()
         
     }
+    @IBAction func sortAllGetTap(_ sender: Any) {
+        viewModel.sortallTap()
+    }
 }
 

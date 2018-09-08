@@ -39,15 +39,28 @@ class ViewModel: NSObject {
                            object: nil)
     }
     
+    func sortallTap(){
+        center.post(Notification(name:Notification.Name(rawValue: StartNotification)))
+        fetchReset()
+        //昇順のみ
+        coreDaraManager.sortAllget(sortkey:"title", Do:{
+            center.post(Notification(name:Notification.Name(rawValue: myNotification)))
+        })
+    }
+    
     func itemallGet(){
         center.post(Notification(name:Notification.Name(rawValue: StartNotification)))
-        let fetchRequest:NSFetchRequest<Entity> = Entity.fetchRequest()
-        coreDaraManager.fetchRequest = fetchRequest
+        fetchReset()
         coreDaraManager.save(Do:{
             coreDaraManager.fetchResults(Do: {
                 center.post(Notification(name:Notification.Name(rawValue: myNotification)))
             })
         })
+    }
+    
+    func fetchReset(){
+        let fetchRequest:NSFetchRequest<Entity> = Entity.fetchRequest()
+        coreDaraManager.fetchRequest = fetchRequest
     }
     
     func itemAdd(title:String, discription:String){
