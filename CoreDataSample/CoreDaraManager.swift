@@ -28,7 +28,6 @@ class CoreDaraManager<T:NSManagedObject>: NSObject {
     let viewContext:NSManagedObjectContext
     var fetchRequest:NSFetchRequest<T>
     var fetchRequests:[T] = []
-    var latestmessage:String = ""
 
     init(fetchRequest:NSFetchRequest<T>){
        
@@ -39,14 +38,13 @@ class CoreDaraManager<T:NSManagedObject>: NSObject {
     
     func isitem(num:Int) ->Bool {
         if(num > fetchRequests.count){
-            latestmessage = "アイテムがありません"
             return false
         }else{
             return true
         }
     }
     
-    func serchfetchResults<serchItem>(key:String = "title", serch:serchItem, getCount:Int?, Do:(()->())){
+    func serchfetchResults<serchItem>(key:String = "title", serch:serchItem, getCount:Int?, Do:((_ :coreDataResult<String>)->())){
         if(getCount != nil){
             self.fetchRequest.fetchBatchSize = getCount!
         }
@@ -55,38 +53,33 @@ class CoreDaraManager<T:NSManagedObject>: NSObject {
         
         do {
             self.fetchRequests = try viewContext.fetch(self.fetchRequest)
-            latestmessage = "成功"
-            Do()
+            Do(.success("成功"))
         } catch {
             let nserror = error as NSError
-            latestmessage = "\(nserror.localizedDescription)"
-            Do()
+            Do(.failure(nserror))
         }
     }
     
-    func sortAllget(sortkey:String = "title", Do:(()->())){
+    func sortAllget(sortkey:String = "title", Do:((_ :coreDataResult<String>)->())){
         let sortSample = NSSortDescriptor(key: sortkey, ascending:true)
         self.fetchRequest.sortDescriptors = [sortSample]
         do {
             self.fetchRequests = try viewContext.fetch(self.fetchRequest)
-            latestmessage = "成功"
-            Do()
+            Do(.success("成功"))
         } catch {
             let nserror = error as NSError
-            latestmessage = "\(nserror.localizedDescription)"
-            Do()
+            Do(.failure(nserror))
         }
     }
     
-    func fetchResults(Do:(()->())){
+    func fetchResults(Do:((_ :coreDataResult<String>)->())){
         do {
             self.fetchRequests = try viewContext.fetch(self.fetchRequest)
-            latestmessage = "成功"
-            Do()
+            Do(.success("成功"))
+
         } catch {
             let nserror = error as NSError
-            latestmessage = "\(nserror.localizedDescription)"
-            Do()
+            Do(.failure(nserror))
         }
     }
     
@@ -95,19 +88,18 @@ class CoreDaraManager<T:NSManagedObject>: NSObject {
         fetchRequest.sortDescriptors = nil
     }
     
-    func save(Do:(()->())){
+    func save(Do:((_ :coreDataResult<String>)->())){
         /*
          値の更新なしで更新したいためコメントアウト
          viewContext.hasChanges
          */
         do {
             try viewContext.save()
-            latestmessage = "成功"
-            Do()
+            Do(.success("成功"))
+
         }catch{
             let nserror = error as NSError
-            latestmessage = "\(nserror.localizedDescription)"
-            Do()
+            Do(.failure(nserror))
         }
     }
 }

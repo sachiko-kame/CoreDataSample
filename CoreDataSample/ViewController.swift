@@ -30,13 +30,15 @@ class ViewController: UIViewController {
     
         viewModel.finishedUpdate = {
             self.showTable.reloadData()
-            self.ResultMessage.text = self.viewModel.coreDaraManager.latestmessage
-            print("☎️結果表示")
+            self.ResultMessage.text = "🌻結果表示"
         }
         
         viewModel.stertUpdate = {
-            self.ResultMessage.text = "処理中…"
-            print("☎️処理中")
+            self.ResultMessage.text = "🏃‍♂️処理中…"
+        }
+        
+        viewModel.erroation = {
+            self.ResultMessage.text = "😱エラーが発生しました"
         }
         
         titleTextField.delegate = self

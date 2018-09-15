@@ -13,10 +13,12 @@ class ViewModel: NSObject {
     
     let myNotification = "updateNotification"
     let StartNotification = "StartNotification"
+    let erroationNotification = "erroationNotification"
     
     let center = NotificationCenter.default
     var finishedUpdate:(() -> ())?
     var stertUpdate:(() -> ())?
+    var erroation:(() -> ())?
     
     
     var fetchRequest:NSFetchRequest<Entity> = Entity.fetchRequest()
@@ -37,15 +39,22 @@ class ViewModel: NSObject {
                            selector: #selector(type(of: self).started(notification:)),
                            name: NSNotification.Name(rawValue: StartNotification),
                            object: nil)
+        center.addObserver(self,
+                           selector: #selector(type(of: self).erro(notification:)),
+                           name: NSNotification.Name(rawValue: erroationNotification),
+                           object: nil)
     }
     
     func sortallTap(){
         center.post(Notification(name:Notification.Name(rawValue: StartNotification)))
         fetchReset()
         //昇順のみ
-        coreDaraManager.save(Do:{
-            coreDaraManager.sortAllget(sortkey:"title", Do:{
-                center.post(Notification(name:Notification.Name(rawValue: myNotification)))
+        coreDaraManager.save(Do:{ response in
+            self.result(result:response, Do:{
+                coreDaraManager.sortAllget(sortkey:"title", Do:{ response in
+                    self.result(result:response)
+                    center.post(Notification(name:Notification.Name(rawValue: myNotification)))
+                })
             })
         })
     }
@@ -53,9 +62,12 @@ class ViewModel: NSObject {
     func itemallGet(){
         center.post(Notification(name:Notification.Name(rawValue: StartNotification)))
         fetchReset()
-        coreDaraManager.save(Do:{
-            coreDaraManager.fetchResults(Do: {
-                center.post(Notification(name:Notification.Name(rawValue: myNotification)))
+        coreDaraManager.save(Do:{ response in
+            self.result(result:response, Do:{
+                coreDaraManager.fetchResults(Do: { response in
+                    self.result(result:response)
+                    center.post(Notification(name:Notification.Name(rawValue: myNotification)))
+                })
             })
         })
     }
@@ -92,13 +104,36 @@ class ViewModel: NSObject {
     
     func itemSerch(serchWord:String){
         center.post(Notification(name:Notification.Name(rawValue: StartNotification)))
-        coreDaraManager.save(Do:{
-            coreDaraManager.serchfetchResults(serch:serchWord, getCount: nil, Do: {
-                center.post(Notification(name:Notification.Name(rawValue: myNotification)))
+        coreDaraManager.save(Do:{ response in
+            self.result(result:response, Do:{
+                coreDaraManager.serchfetchResults(serch:serchWord, getCount: nil, Do: { response in
+                    self.result(result:response)
+                    center.post(Notification(name:Notification.Name(rawValue: myNotification)))
+                })
             })
         })
     }
     
+    func result<T>(result:coreDataResult<T>){
+        switch result {
+        case .success(let value):
+            print("\(value)")
+        case .failure(let error):
+            print("\(error)")
+            center.post(Notification(name:Notification.Name(rawValue: erroationNotification)))
+        }
+    }
+
+    func result<T>(result:coreDataResult<T>, Do:(()->())){
+        switch result {
+        case .success(let value):
+            print("\(value)")
+            Do()
+        case .failure(let error):
+            print("\(error)")
+            center.post(Notification(name:Notification.Name(rawValue: erroationNotification)))
+        }
+    }
     //指定削除
     //全削除
     
@@ -109,6 +144,10 @@ class ViewModel: NSObject {
     
     @objc private func started(notification: Notification) {
         self.stertUpdate!()
+    }
+    
+    @objc private func erro(notification: Notification) {
+        self.erroation!()
     }
 }
 
